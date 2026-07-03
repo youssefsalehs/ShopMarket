@@ -1,0 +1,19 @@
+"use client";
+
+import { useState } from "react";
+
+export default function CategoryBtn({
+  category,
+  selectedCategory,
+  setSelectedCategory,
+}) {
+  return (
+    <div
+      className={`${selectedCategory === category?.name ? "bg-green-500 border text-green-50 border-green-500" : "bg-green-50 border border-green-200"}  px-6 py-2 rounded-full cursor-pointer `}
+      onClick={() => setSelectedCategory(category.name)}
+    >
+      {" "}
+      {category.name}{" "}
+    </div>
+  );
+}
