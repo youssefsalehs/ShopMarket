@@ -7,7 +7,7 @@ import { LuShoppingBag } from "react-icons/lu";
 import MobileNav from "./MobileNav";
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 w-full bg-green-50 backdrop-blur-2xl px-4 py-6 text-lg text-green-900">
+    <nav className="fixed top-0 left-0 w-full bg-green-50 backdrop-blur-2xl px-4 py-6 text-lg text-green-900 z-40">
       <div className="w-full md:w-[80%] mx-auto flex items-center justify-between">
         <MobileNav />
 

@@ -11,16 +11,16 @@ export default function MobileNav() {
   }
   return (
     <>
-      <div className="flex gap-2 items-center ">
+      <div className="flex gap-2 items-center z-50">
         {" "}
         <FiMenu className="md:hidden" onClick={toggleMob} />
-        <Link href={"/"} className="font-bold">
+        <Link href={"/"} className="font-bold text-xl">
           ShopMarket
         </Link>
       </div>
       {openMob && (
         <>
-          <div className="absolute bg-green-950 inset-0 h-screen w-[80%] z-20 text-green-50">
+          <div className="absolute bg-green-950 inset-0 h-screen w-[80%] z-50! text-green-50">
             <div className="p-8 ">
               <div className=" flex items-center justify-between text-xl">
                 <Link href={"/"} className="font-bold ">

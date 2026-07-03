@@ -1,28 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ProductCard from "../Product/ProductCard";
 
 export default function Products({ selectedCategory }) {
   const [products, setProducts] = useState([]);
+  const params = new URLSearchParams();
+  params.set("limit", 8);
+  params.append("category[in]", selectedCategory);
   console.log(selectedCategory);
   useEffect(() => {
     async function getProducts() {
-      const res = await fetch(`/api/products`);
+      const res = await fetch(`/api/products?${params.toString()}`);
       const data = await res.json();
-      const products = data?.data.filter(
-        (p) => p?.category.name === selectedCategory,
-      );
-      console.log(data?.data);
-      setProducts(products);
+      console.log(data);
+      setProducts(data.data);
     }
 
     getProducts();
-  }, [selectedCategory]);
+  }, [selectedCategory, params]);
 
   return (
-    <div className="w-[90%] md:w-[80%] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="w-[90%] md:w-[80%] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
       {products.map((product) => (
-        <div key={product._id}>{product.title}</div>
+        <ProductCard key={product?._id} product={product} />
       ))}
     </div>
   );
