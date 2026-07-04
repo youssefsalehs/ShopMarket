@@ -1,15 +1,14 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { CiHeart } from "react-icons/ci";
-import { FiMenu } from "react-icons/fi";
 import { IoMdSearch } from "react-icons/io";
 import { LuShoppingBag } from "react-icons/lu";
 import MobileNav from "./MobileNav";
-import { usePathname } from "next/navigation";
 export default function Navbar() {
   const x = usePathname();
   return (
-    <nav className="fixed top-0 left-0 w-full bg-green-50 backdrop-blur-2xl px-4 py-6   z-40">
+    <nav className="fixed top-0 left-0 w-full bg-green-50/70 backdrop-blur-sm px-4 py-6   z-40 border-b border-green-950">
       <div className="w-full md:w-[80%] mx-auto flex items-center justify-between">
         <MobileNav />
 
@@ -51,7 +50,7 @@ export default function Navbar() {
             </Link>
           </li>
         </ul>
-        <ul className="flex items-center justify-center gap-4">
+        <ul className="flex items-center justify-center gap-4 text-xl">
           <li>
             <IoMdSearch />
           </li>
