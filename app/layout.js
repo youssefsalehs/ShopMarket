@@ -26,7 +26,12 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         {" "}
         <Navbar />
-        <main className=" my-24">{children}</main>
+        <main className=" mt-24 ">{children} </main>
+        <footer className="w-[90%] mx-auto md:w-[80%] py-4 text-center border-t  my-auto">
+          © {new Date().getFullYear()}
+          <span className="text-green-800 font-extrabold"> ShopMarket</span>.
+          All rights reserved.
+        </footer>
       </body>
     </html>
   );

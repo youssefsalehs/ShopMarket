@@ -11,13 +11,13 @@ import { IoMdHeart } from "react-icons/io";
 export default function ProductCard({ product }) {
   return (
     <Card className="w-full max-w-sm overflow-hidden pt-0 group">
-      <CardHeader className=" ">
+      <CardHeader className="p-0">
         <div className="flex justify-center p-0 overflow-hidden relative  h-[250px] w-full ">
           <Image
             src={product.imageCover}
             fill
             alt={product.title}
-            className="object-cover object-center group-hover:scale-105 transition duration-300 z-20"
+            className="object-cover object-center group-hover:scale-105 transition duration-300 "
           />
           <span className="absolute top-2 right-2 text-slate-800/50 hover:text-green-800 hover:bg-green-200/50 p-2 bg-slate-200/50 rounded-full cursor-pointer duration-300 transition">
             <IoMdHeart size={20} />
