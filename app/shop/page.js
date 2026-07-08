@@ -1,20 +1,22 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PaginationDemo } from "../_components/Pagination/Pagination";
 import Products from "../_components/Shop/Products/Products";
 import ShopFilters from "../_components/Shop/ShopFilters/ShopFilters";
 
 export default function Page() {
+  const searchParams = useSearchParams();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const selectedCategoryParam = searchParams.get("category") || "";
   const [metaData, setMetaData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-
   useEffect(() => {
     async function getCategories() {
       try {
@@ -47,7 +49,7 @@ export default function Page() {
 
   useEffect(() => {
     getProducts();
-  }, [selectedCategory, selectedBrand, currentPage]);
+  }, [selectedCategory, selectedBrand, currentPage, selectedCategoryParam]);
 
   async function getProducts() {
     try {
@@ -55,9 +57,10 @@ export default function Page() {
 
       params.set("limit", 9);
       params.set("page", currentPage);
+      const category = selectedCategoryParam || selectedCategory;
 
-      if (selectedCategory) {
-        params.append("category[in]", selectedCategory);
+      if (category) {
+        params.append("category[in]", category);
       }
       if (selectedBrand) {
         params.set("brand", selectedBrand);

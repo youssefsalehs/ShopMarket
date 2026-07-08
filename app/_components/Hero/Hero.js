@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="bg-green-100 w-[90%] md:w-[80%]  mx-auto flex justify-center md:justify-between items-center rounded-md">
+    <div className="bg-green-50 w-[90%] md:w-[80%]  mx-auto flex justify-center md:justify-between items-center rounded-md">
       <div className="px-20 py-20 flex flex-col gap-4">
         <p className="font-bold text-green-900 text-3xl">
           Grab Up to 50% Off on <br />

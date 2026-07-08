@@ -41,10 +41,7 @@ export default function MobileNav() {
                   <Link href={"/shop"}>Shop</Link>
                 </li>
                 <li>
-                  <Link href={"/categories"}>Categories</Link>
-                </li>
-                <li>
-                  <Link href={"/brands"}>Brands</Link>
+                  <Link href={"/wishlist"}>wishlist</Link>
                 </li>
               </ul>
             </div>

@@ -1,6 +1,8 @@
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/Navbar/Navbar";
+import Footer from "./_components/Footer/Footer";
+import MySessionProvider from "./_components/MySessionProvider/MySessionProvider";
 
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
@@ -23,15 +25,13 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${robotoSans.variable} ${robotoMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col ">
         {" "}
-        <Navbar />
-        <main className=" mt-24 ">{children} </main>
-        <footer className="w-[90%] mx-auto md:w-[80%] py-4 text-center border-t  my-auto">
-          © {new Date().getFullYear()}
-          <span className="text-green-800 font-extrabold"> ShopMarket</span>.
-          All rights reserved.
-        </footer>
+        <MySessionProvider>
+          <Navbar />
+          <main className=" mt-24 ">{children} </main>
+          <Footer />
+        </MySessionProvider>
       </body>
     </html>
   );
