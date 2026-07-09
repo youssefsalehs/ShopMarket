@@ -8,7 +8,7 @@ export default async function Footer() {
   const data = await res.json();
   const categories = data.data;
   return (
-    <div className="mt-auto border-t border-stone-200 bg-stone-50/40">
+    <div className="mt-auto border-t  border-green-950 bg-stone-50/40">
       <div className="w-[90%] lg:w-[80%] mx-auto flex flex-wrap justify-between gap-4  border-b border-stone-200">
         <Card
           icon={IoLocationOutline}

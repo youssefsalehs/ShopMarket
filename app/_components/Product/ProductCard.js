@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { addToWishlist } from "@/services/apiWishlist";
 import Image from "next/image";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { IoMdHeart } from "react-icons/io";
 
@@ -38,27 +39,31 @@ export default function ProductCard({ product }) {
           </span>
         </div>
       </CardHeader>
+      <Link href={`/shop/${product._id}`}>
+        <CardContent className="space-y-2">
+          {product?.subcategory.map((s) => (
+            <p key={s?._id} className="text-slate-400">
+              {s?.name}
+            </p>
+          ))}
+          <h3 className="text-lg font-semibold line-clamp-1">
+            {product.title}
+          </h3>
 
-      <CardContent className="space-y-2">
-        {product?.subcategory.map((s) => (
-          <p key={s?._id} className="text-slate-400">
-            {s?.name}
+          <p className="text-sm text-gray-500 line-clamp-2">
+            {product.description}
           </p>
-        ))}
-        <h3 className="text-lg font-semibold line-clamp-1">{product.title}</h3>
+          <span className="text-sm font-bold">
+            in stock {product?.quantity}
+          </span>
 
-        <p className="text-sm text-gray-500 line-clamp-2">
-          {product.description}
-        </p>
-        <span className="text-sm font-bold">in stock {product?.quantity}</span>
+          <div className="flex justify-between items-center text-sm">
+            <span className="font-bold">$ {product.price}</span>
 
-        <div className="flex justify-between items-center text-sm">
-          <span className="font-bold">$ {product.price}</span>
-
-          <span className="text-yellow-500">⭐ {product.ratingsAverage}</span>
-        </div>
-      </CardContent>
-
+            <span className="text-yellow-500">⭐ {product.ratingsAverage}</span>
+          </div>
+        </CardContent>
+      </Link>
       <CardFooter className={"mt-auto"}>
         <Button className="bg-green-900 text-green-100 rounded-sm  hover:bg-green-950 transition duration-300 w-full cursor-pointer">
           Add to Cart
