@@ -1,14 +1,33 @@
 "use client";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CiHeart } from "react-icons/ci";
-import MobileNav from "./MobileNav";
-import { Button } from "@/components/ui/button";
-import { signOut, useSession } from "next-auth/react";
+import { useEffect, useRef, useState } from "react";
+import { FaRegCircleUser } from "react-icons/fa6";
 import { FiShoppingBag } from "react-icons/fi";
+import MobileNav from "./MobileNav";
 export default function Navbar() {
+  const [openProfile, setOpenProfile] = useState(false);
+  const profileRef = useRef(null);
+  const toggleProfile = () => {
+    setOpenProfile((s) => !s);
+  };
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setOpenProfile(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const x = usePathname();
   const { data: session, status } = useSession();
+
   function logout() {
     signOut({ callbackUrl: "/login" });
   }
@@ -76,23 +95,37 @@ export default function Navbar() {
               </li>
             </>
           )}
-
-          {session && (
-            <li className="hidden md:block">
-              hi , {session.user.name ?? "Guest"}
-            </li>
-          )}
           {status === "authenticated" && (
-            <li>
-              <Button
-                className={
-                  "bg-green-900 text-green-100 rounded-sm px-4 py-1 self-start hover:bg-green-950 transition duration-300"
-                }
-                onClick={logout}
-              >
-                sign out
-              </Button>
-            </li>
+            <div className="relative">
+              <FaRegCircleUser
+                size={25}
+                className="cursor-pointer"
+                onClick={toggleProfile}
+              />
+
+              {openProfile && (
+                <div
+                  className="absolute top-5 right-0 mt-2 w-48 rounded-lg border border-green-200 bg-green-50 shadow-lg z-50 w-fit overflow-hidden"
+                  ref={profileRef}
+                >
+                  <div className="flex flex-col gap-2 px-3 py-2 bg-green-800 text-green-50">
+                    {" "}
+                    <p>hi, {session.user.name}</p>
+                    <p className="text-sm">{session.user.email}</p>
+                  </div>
+
+                  <ul className="py-2">
+                    <li className="px-4 py-2 hover:bg-green-100 cursor-pointer">
+                      change password
+                    </li>
+
+                    <li className="px-4 py-2 hover:bg-green-100 cursor-pointer">
+                      <span onClick={logout}>sign out</span>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           )}
         </ul>
       </div>

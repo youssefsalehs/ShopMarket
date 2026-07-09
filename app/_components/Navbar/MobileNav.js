@@ -20,7 +20,6 @@ const NAV_LINKS = [
 
 export default function MobileNav() {
   const [openMob, setOpenMob] = useState(false);
-  const { data: session } = useSession();
   const pathname = usePathname();
 
   function toggleMob() {
@@ -89,17 +88,6 @@ export default function MobileNav() {
               className="cursor-pointer hover:text-green-300 transition-colors"
             />
           </div>
-
-          {session && (
-            <div className="flex items-center gap-2 mt-4 pl-1">
-              <div className="w-8 h-8 rounded-full bg-green-800 flex items-center justify-center text-sm font-semibold uppercase">
-                {(session.user.name ?? "G")[0]}
-              </div>
-              <p className="text-sm text-green-200">
-                Hi, {session.user.name ?? "Guest"}
-              </p>
-            </div>
-          )}
 
           <ul className="flex flex-col gap-2 mt-8">
             {NAV_LINKS.map(({ href, label, icon: Icon }) => {
