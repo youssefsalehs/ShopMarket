@@ -6,18 +6,22 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { addToWishlist } from "@/services/apiWishlist";
+import { deleteFromWishlist } from "@/services/apiWishlist";
 import Image from "next/image";
+import { HiOutlineTrash } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { IoMdHeart } from "react-icons/io";
 
-export default function ProductCard({ product }) {
-  const handleAddToWishlist = async (productId) => {
-    const res = await addToWishlist(productId);
+export default function WishlistCard({ product }) {
+  const router = useRouter();
+  const handleDeleteFromWishlist = async (productId) => {
+    const res = await deleteFromWishlist(productId);
     if (res?.status === "success") {
-      toast.success("Product added to wishlist successfully!", { icon: "❤️" });
+      toast.success("Product removed from wishlist successfully!");
+      router.refresh();
     } else {
       toast.error(res?.message || "Something went wrong.");
+      console.log(res);
     }
   };
   return (
@@ -31,10 +35,10 @@ export default function ProductCard({ product }) {
             className="object-cover object-center group-hover:scale-105 transition duration-300 "
           />
           <span
-            className="absolute top-2 right-2 text-slate-800/50 hover:text-green-800 hover:bg-green-200/80 p-2 bg-slate-200/50 rounded-full cursor-pointer duration-300 transition"
-            onClick={() => handleAddToWishlist(product?._id)}
+            className="absolute top-2 right-2 text-red-800/50 hover:text-red-800 hover:bg-red-200/80 p-2 bg-red-200/50 rounded-full cursor-pointer duration-300 transition"
+            onClick={() => handleDeleteFromWishlist(product?._id)}
           >
-            <IoMdHeart size={20} />
+            <HiOutlineTrash size={20} />
           </span>
         </div>
       </CardHeader>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
@@ -9,10 +10,20 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-export function PaginationDemo({ metaData, currentPage, setCurrentPage }) {
+export function PaginationDemo({ metaData, currentPage }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   if (!metaData?.numberOfPages) return null;
 
   const { numberOfPages } = metaData;
+
+  function goToPage(page) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page);
+    router.push(`${pathname}?${params.toString()}`);
+  }
 
   return (
     <Pagination className={""}>
@@ -26,7 +37,7 @@ export function PaginationDemo({ metaData, currentPage, setCurrentPage }) {
             onClick={(e) => {
               e.preventDefault();
               if (currentPage > 1) {
-                setCurrentPage(currentPage - 1);
+                goToPage(currentPage - 1);
               }
             }}
           />
@@ -42,7 +53,7 @@ export function PaginationDemo({ metaData, currentPage, setCurrentPage }) {
                 isActive={currentPage === page}
                 onClick={(e) => {
                   e.preventDefault();
-                  setCurrentPage(page);
+                  goToPage(page);
                 }}
               >
                 {page}
@@ -62,7 +73,7 @@ export function PaginationDemo({ metaData, currentPage, setCurrentPage }) {
             onClick={(e) => {
               e.preventDefault();
               if (currentPage < numberOfPages) {
-                setCurrentPage(currentPage + 1);
+                goToPage(currentPage + 1);
               }
             }}
           />

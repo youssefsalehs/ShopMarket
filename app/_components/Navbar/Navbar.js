@@ -77,7 +77,11 @@ export default function Navbar() {
             </>
           )}
 
-          {session && <li>hi , {session.user.name ?? "Guest"}</li>}
+          {session && (
+            <li className="hidden md:block">
+              hi , {session.user.name ?? "Guest"}
+            </li>
+          )}
           {status === "authenticated" && (
             <li>
               <Button

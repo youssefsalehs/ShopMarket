@@ -25,7 +25,7 @@ export default async function ShopByBrands() {
             className="flex gap-4 items-center hover:-translate-y-1 hover:shadow transition duration-300"
           >
             <Link
-              href={"/shop"}
+              href={`/shop?brand=${b._id}`}
               className="w-28 h-18 relative bg-slate-200 overflow-hidden"
             >
               <Image

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./_components/Navbar/Navbar";
 import Footer from "./_components/Footer/Footer";
 import MySessionProvider from "./_components/MySessionProvider/MySessionProvider";
+import { Toaster } from "react-hot-toast";
 
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col ">
         {" "}
+        <Toaster />
         <MySessionProvider>
           <Navbar />
           <main className=" mt-24 ">{children} </main>
