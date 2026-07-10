@@ -9,14 +9,33 @@ import {
 import { addToWishlist } from "@/services/apiWishlist";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoMdHeart } from "react-icons/io";
 
 export default function ProductCard({ product }) {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    setIsWishlisted(wishlist.includes(product._id));
+  }, [product._id]);
   const handleAddToWishlist = async (productId) => {
     const res = await addToWishlist(productId);
+
     if (res?.status === "success") {
-      toast.success("Product added to wishlist successfully!", { icon: "❤️" });
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+      if (!wishlist.includes(productId)) {
+        wishlist.push(productId);
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      }
+
+      setIsWishlisted(true);
+
+      toast.success("Product added to wishlist successfully!", {
+        icon: "❤️",
+      });
     } else {
       toast.error(res?.message || "Something went wrong.");
     }
@@ -32,8 +51,13 @@ export default function ProductCard({ product }) {
             className="object-cover object-center group-hover:scale-105 transition duration-300 "
           />
           <span
-            className="absolute top-2 right-2 text-slate-800/50 hover:text-green-800 hover:bg-green-200/80 p-2 bg-slate-200/50 rounded-full cursor-pointer duration-300 transition"
-            onClick={() => handleAddToWishlist(product?._id)}
+            onClick={() => handleAddToWishlist(product._id)}
+            className={`absolute top-2 right-2 p-2 rounded-full cursor-pointer transition
+    ${
+      isWishlisted
+        ? "text-green-800 bg-green-200/80"
+        : "text-slate-800/50 hover:text-green-800 hover:bg-green-200/80 bg-slate-200/50"
+    }`}
           >
             <IoMdHeart size={20} />
           </span>

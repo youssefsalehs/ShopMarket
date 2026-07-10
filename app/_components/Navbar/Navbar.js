@@ -116,7 +116,7 @@ export default function Navbar() {
 
                   <ul className="py-2">
                     <li className="px-4 py-2 hover:bg-green-100 cursor-pointer">
-                      change password
+                      <Link href={"/change-password"}>change password</Link>
                     </li>
 
                     <li className="px-4 py-2 hover:bg-green-100 cursor-pointer">

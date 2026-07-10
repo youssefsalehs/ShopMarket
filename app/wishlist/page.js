@@ -5,7 +5,7 @@ import { IoMdHeart } from "react-icons/io";
 export default async function Wishlist() {
   const res = await getWishlist();
   const products = res.data;
-  if (products.length === 0) {
+  if (products?.length === 0) {
     return (
       <div className="flex flex-col items-center text-center py-16 px-6 max-w-md mx-auto">
         <span className=" text-slate-800/50 hover:text-green-800 hover:bg-green-200/80 p-4 bg-slate-200/50 rounded-full cursor-pointer duration-300 transition mb-3">

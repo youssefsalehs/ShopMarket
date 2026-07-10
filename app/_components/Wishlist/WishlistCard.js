@@ -18,6 +18,12 @@ export default function WishlistCard({ product }) {
     const res = await deleteFromWishlist(productId);
     if (res?.status === "success") {
       toast.success("Product removed from wishlist successfully!");
+
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+      const updatedWishlist = wishlist.filter((id) => id !== productId);
+
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
       router.refresh();
     } else {
       toast.error(res?.message || "Something went wrong.");

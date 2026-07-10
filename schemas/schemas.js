@@ -31,3 +31,16 @@ export const registerSchema = z
     path: ["rePassword"],
     error: "Password and rePassword not match!",
   });
+export const passwordSchema = z
+  .object({
+    currentPassword: z.string().nonempty("Password is required"),
+    password: z
+      .string()
+      .nonempty("Password is required")
+      .min(6, "min length 6"),
+    rePassword: z.string().nonempty("rePassword is required"),
+  })
+  .refine((obj) => obj.password === obj.rePassword, {
+    path: ["rePassword"],
+    error: "Password and rePassword not match!",
+  });
