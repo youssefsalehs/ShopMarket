@@ -6,11 +6,12 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { addToCart } from "@/services/apiCart";
 import { deleteFromWishlist } from "@/services/apiWishlist";
 import Image from "next/image";
-import { HiOutlineTrash } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { HiOutlineTrash } from "react-icons/hi2";
 
 export default function WishlistCard({ product }) {
   const router = useRouter();
@@ -28,6 +29,17 @@ export default function WishlistCard({ product }) {
     } else {
       toast.error(res?.message || "Something went wrong.");
       console.log(res);
+    }
+  };
+  const handleAddCart = async (productId) => {
+    const res = await addToCart(productId);
+
+    if (res?.status === "success") {
+      toast.success("Product added to cart successfully!", {
+        icon: "❤️",
+      });
+    } else {
+      toast.error(res?.message || "Something went wrong.");
     }
   };
   return (
@@ -70,7 +82,10 @@ export default function WishlistCard({ product }) {
       </CardContent>
 
       <CardFooter className={"mt-auto"}>
-        <Button className="bg-green-900 text-green-100 rounded-sm  hover:bg-green-950 transition duration-300 w-full cursor-pointer">
+        <Button
+          onClick={() => handleAddCart(product._id)}
+          className="bg-green-900 text-green-100 rounded-sm  hover:bg-green-950 transition duration-300 w-full cursor-pointer"
+        >
           Add to Cart
         </Button>
       </CardFooter>

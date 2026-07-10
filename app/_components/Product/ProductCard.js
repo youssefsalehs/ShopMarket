@@ -6,6 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { addToCart } from "@/services/apiCart";
 import { addToWishlist } from "@/services/apiWishlist";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,6 +35,17 @@ export default function ProductCard({ product }) {
       setIsWishlisted(true);
 
       toast.success("Product added to wishlist successfully!", {
+        icon: "❤️",
+      });
+    } else {
+      toast.error(res?.message || "Something went wrong.");
+    }
+  };
+  const handleAddCart = async (productId) => {
+    const res = await addToCart(productId);
+
+    if (res?.status === "success") {
+      toast.success("Product added to cart successfully!", {
         icon: "❤️",
       });
     } else {
@@ -89,7 +101,10 @@ export default function ProductCard({ product }) {
         </CardContent>
       </Link>
       <CardFooter className={"mt-auto"}>
-        <Button className="bg-green-900 text-green-100 rounded-sm  hover:bg-green-950 transition duration-300 w-full cursor-pointer">
+        <Button
+          onClick={() => handleAddCart(product._id)}
+          className="bg-green-900 text-green-100 rounded-sm  hover:bg-green-950 transition duration-300 w-full cursor-pointer"
+        >
           Add to Cart
         </Button>
       </CardFooter>
