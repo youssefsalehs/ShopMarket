@@ -1,16 +1,13 @@
 export async function GET(request) {
   try {
-    // Create backend URL
     const url = new URL(`${process.env.BACKEND}/products`);
 
-    // Copy all query parameters from the incoming request
     request.nextUrl.searchParams.forEach((value, key) => {
       url.searchParams.append(key, value);
     });
 
-    // Fetch products from the backend
     const res = await fetch(url.toString(), {
-      cache: "no-store", // Optional: always fetch fresh data
+      cache: "no-store",
     });
 
     if (!res.ok) {
