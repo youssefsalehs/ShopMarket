@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ProductCard from "../Product/ProductCard";
+import { getProducts } from "@/services/apiProducts";
 
 export default function Products({ selectedCategory }) {
   const [products, setProducts] = useState([]);
@@ -9,13 +10,12 @@ export default function Products({ selectedCategory }) {
   params.set("limit", 8);
   params.append("category[in]", selectedCategory);
   useEffect(() => {
-    async function getProducts() {
-      const res = await fetch(`/api/products?${params.toString()}`);
-      const data = await res.json();
-      setProducts(data.data);
+    async function getProductsApi() {
+      const res = await getProducts(params);
+      setProducts(res.data);
     }
 
-    getProducts();
+    getProductsApi();
   }, [selectedCategory, params]);
 
   return (
