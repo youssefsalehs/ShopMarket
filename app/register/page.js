@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { CiShoppingBasket } from "react-icons/ci";
 import { registerImg } from "../_assets/assets";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const router = useRouter();
@@ -30,28 +31,17 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-
       const response = await axios.post(
         `https://ecommerce.routemisr.com/api/v1/auth/signup`,
         data,
       );
-
-      console.log(response.data);
       if (response.data.message === "success") {
-        alert("successfully signed up");
+        toast.success("successfully signed up");
         router.push("/login");
       }
     } catch (error) {
       console.error(error);
-
-      if (error.response) {
-        console.log(error.response.data);
-      } else if (error.request) {
-        console.log("No response from server");
-      } else {
-        console.log(error.message);
-      }
+      toast.error(error.message);
     }
   };
   return (

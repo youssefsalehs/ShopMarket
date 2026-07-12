@@ -12,18 +12,19 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
+import { CheckoutModal } from "../_components/CheckoutModal/CheckoutModal";
 
 export default function Cart() {
   const [products, setProducts] = useState([]);
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [numOfCartItems, setNumOfCartItems] = useState(0);
   const [loading, setLoading] = useState(true);
-
+  const [cartId, setCartId] = useState("");
   useEffect(() => {
     async function fetchCart() {
       try {
         const res = await getCart();
-
+        setCartId(res.cartId);
         setProducts(res.data.products);
         setTotalCartPrice(res.data.totalCartPrice);
         setNumOfCartItems(res.numOfCartItems);
@@ -184,10 +185,7 @@ export default function Cart() {
             <p>Total Price</p>
             <span>£{totalCartPrice}</span>
           </div>
-
-          <Button className="bg-green-900 text-green-100 rounded-sm px-4 py-1 hover:bg-green-950 transition duration-300 cursor-pointer">
-            Proceed to checkout
-          </Button>
+          <CheckoutModal cartId={cartId} />
         </div>
       </div>
     </div>

@@ -44,3 +44,15 @@ export const passwordSchema = z
     path: ["rePassword"],
     error: "Password and rePassword not match!",
   });
+
+export const shippingSchema = z.object({
+  shippingAddress: z.object({
+    details: z.string().min(3, "Address details are required"),
+
+    phone: z
+      .string()
+      .regex(/^01[0125]\d{8}$/, "Please enter a valid Egyptian phone number"),
+
+    city: z.string().min(2, "City is required"),
+  }),
+});

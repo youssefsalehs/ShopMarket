@@ -5,13 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { CiShoppingBasket } from "react-icons/ci";
 import { loginImg } from "../_assets/assets";
 
 export default function Login() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -36,10 +35,10 @@ export default function Login() {
       callbackUrl: "/",
     });
     if (res.ok) {
-      alert("you logged in successfuly");
+      toast.success("you logged in successfuly");
       window.location.href = "/";
     } else {
-      alert(res?.error);
+      toast.error(res?.error);
     }
   };
   return (
