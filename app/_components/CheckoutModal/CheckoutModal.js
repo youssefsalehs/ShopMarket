@@ -33,7 +33,7 @@ export function CheckoutModal({ cartId }) {
     },
   });
   async function createOrder(values, cartId) {
-    const res = await fetch("/api/payment", {
+    const res = await fetch("/api/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
