@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { getBrands } from "@/services/apiBrands";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function ShopByBrands() {
-  const res = await fetch(`${process.env.APP_URL}/api/brands`);
-  const data = await res.json();
+  const data = await getBrands();
   return (
     <div className="flex flex-col gap-2 w-[90%] md:w-[80%] mx-auto p-4 border border-slate-200 rounded my-8">
       <div className="border-b border-slate-200 mb-4 pb-2 flex justify-between items-center ">

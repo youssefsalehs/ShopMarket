@@ -1,8 +1,8 @@
+import { getCategories } from "@/services/apiCategories";
 import CategoriesBar from "./CategoriesBar";
 
 export default async function CategoriesBarContainer() {
-  const res = await fetch(`${process.env.APP_URL}/api/categories`);
-  const data = await res.json();
+  const data = await getCategories();
 
   return <CategoriesBar categories={data.data} />;
 }

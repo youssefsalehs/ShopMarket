@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { passwordSchema } from "@/schemas/schemas";
+import { changePassword } from "@/services/apiUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
@@ -23,17 +24,8 @@ export default function ChangePassword() {
   } = form;
   async function onSubmit(data) {
     try {
-      const res = await fetch("/api/users/change-password", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
+      const result = await changePassword(data);
+      if (result.message !== "success") {
         toast.error(result.message || "Failed to change password");
         return;
       }

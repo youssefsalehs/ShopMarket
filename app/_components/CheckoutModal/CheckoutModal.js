@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { shippingSchema } from "@/schemas/schemas";
+import { createOrder } from "@/services/apiOrders";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -32,27 +33,18 @@ export function CheckoutModal({ cartId }) {
       },
     },
   });
-  async function createOrder(values, cartId) {
-    const res = await fetch("/api/order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cartId,
-        shippingAddress: values.shippingAddress,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
-    if (data.status === "success") {
-      toast.success("your order has been created successfully");
-      router.push("/");
-    }
-  }
+  async function handleCreateOrder(values) {
+    try {
+      const data = await createOrder(cartId, values.shippingAddress);
 
-  function onSubmit(values) {
-    createOrder(values, cartId);
+      if (data.status === "success") {
+        toast.success("Your order has been created successfully");
+        router.push("/");
+      }
+    } catch (error) {
+      toast.error("Failed to create order");
+      console.log(error);
+    }
   }
 
   return (
@@ -68,7 +60,7 @@ export function CheckoutModal({ cartId }) {
           <DialogTitle>Shipping Address</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(handleCreateOrder)} className="space-y-4">
           <div>
             <input
               {...register("shippingAddress.details")}

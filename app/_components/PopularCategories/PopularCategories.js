@@ -1,9 +1,9 @@
+import { getCategories } from "@/services/apiCategories";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function PopularCategories() {
-  const res = await fetch(`${process.env.APP_URL}/api/categories`);
-  const data = await res.json();
+  const data = await getCategories();
   return (
     <div className="flex flex-col gap-2 w-[90%] md:w-[80%] mx-auto p-4 border border-slate-200 rounded mt-8">
       <h2 className="font-semibold border-b border-slate-200 mb-4 pb-2 text-xl">

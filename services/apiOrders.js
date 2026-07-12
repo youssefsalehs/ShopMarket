@@ -1,7 +1,8 @@
+"use server";
+
 import getMyToken from "@/utilities/getMyToken";
 
-export async function POST(request) {
-  const { cartId, shippingAddress } = await request.json();
+export async function createOrder(cartId, shippingAddress) {
   const token = await getMyToken();
 
   const res = await fetch(`${process.env.BACKEND}/orders/${cartId}`, {
@@ -13,7 +14,9 @@ export async function POST(request) {
     body: JSON.stringify({ shippingAddress }),
   });
 
-  const data = await res.json();
+  if (!res.ok) {
+    throw new Error("Failed to create order");
+  }
 
-  return Response.json(data);
+  return res.json();
 }

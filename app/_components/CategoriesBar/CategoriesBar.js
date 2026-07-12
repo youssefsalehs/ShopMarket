@@ -8,7 +8,7 @@ import Products from "./Products";
 export default function CategoriesBar({ categories }) {
   const [selectedCategory, setSelectedCategory] = useState(categories[1]._id);
 
-  const shownCategories = categories.slice(1, 3);
+  const shownCategories = categories.slice(1, 4);
 
   return (
     <>

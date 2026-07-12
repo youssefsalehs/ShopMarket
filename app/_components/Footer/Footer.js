@@ -3,9 +3,9 @@ import { FiClock } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { CiShoppingBasket } from "react-icons/ci";
 import Link from "next/link";
+import { getCategories } from "@/services/apiCategories";
 export default async function Footer() {
-  const res = await fetch(`${process.env.APP_URL}/api/categories`);
-  const data = await res.json();
+  const data = await getCategories();
   const categories = data.data;
   return (
     <div className="mt-auto border-t  border-green-950 bg-stone-50/40">
